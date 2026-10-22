@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Domain.Vehiculos
+﻿namespace CleanArchitecture.Domain.Vehiculos
 {
+    /// <summary>
+    /// Implementación manual del patrón Smart Enum (enumeration class).
+    /// NOTA: En un proyecto real sería mejor usar la librería Ardalis.SmartEnum
+    /// (SmartEnum&lt;TipoMoneda, string&gt;), que ya resuelve:
+    ///   - Listado de valores (List) sin mantener a mano la colección All.
+    ///   - Conversión segura (FromValue / FromName / TryFromValue).
+    ///   - Igualdad, comparación y serialización (JSON, EF Core) out of the box.
+    /// Además, esta versión manual tiene un fallo: el setter 'init' permite
+    /// crear instancias inválidas con 'with' (p. ej. Usd with { Codigo = "XXX" }),
+    /// saltándose la validación de FromCodigo. Debería ser 'public string Codigo { get; }'.
+    /// </summary>
     public record TipoMoneda
     {
         public static TipoMoneda None { get; } = new TipoMoneda("");
@@ -25,7 +29,7 @@ namespace CleanArchitecture.Domain.Vehiculos
 
         public static TipoMoneda FromCodigo(string codigo)
         {
-            return All.FirstOrDefault(m => m.Codigo == codigo) 
+            return All.FirstOrDefault(m => m.Codigo == codigo)
                 ?? throw new ApplicationException("El tipo de moneda es inválido");
         }
     }

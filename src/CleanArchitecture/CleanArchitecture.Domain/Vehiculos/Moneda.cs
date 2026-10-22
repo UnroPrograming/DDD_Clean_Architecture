@@ -12,7 +12,7 @@
             return new Moneda(m1.Cantidad + m2.Cantidad, m1.Tipo);
         }
 
-        public static Moneda operator -(Moneda m1, Moneda m2)
+        public static Moneda operator - (Moneda m1, Moneda m2)
         {
             if (m1.Tipo != m2.Tipo)
             {
