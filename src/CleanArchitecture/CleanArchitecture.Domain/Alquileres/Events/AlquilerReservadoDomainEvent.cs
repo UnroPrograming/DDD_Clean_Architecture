@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Domain.Alquileres.Events
 {
-    public sealed record AlquilerReservadoDomainEvents(Guid AlquilerId) : IDomainEvent
+    public sealed record AlquilerReservadoDomainEvent(Guid AlquilerId) : IDomainEvent
     {
     }
 }

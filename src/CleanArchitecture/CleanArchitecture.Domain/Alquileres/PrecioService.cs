@@ -23,14 +23,14 @@ namespace CleanArchitecture.Domain.Alquileres
                 };
             }
 
-            var precioAccesorios = Moneda.Zero();
+            var precioAccesorios = Moneda.Zero(tipoMoneda);
 
             if (porcentageChange > 0)
             {
                 precioAccesorios = new Moneda(precioAlquiler.Cantidad * porcentageChange, tipoMoneda);
             }
 
-            return new PrecioDetail(precioAlquiler, precioAccesorios, vehiculo.Mantenimiento!);
+            return new PrecioDetail(precioAlquiler, vehiculo.Mantenimiento!, precioAccesorios);
         }
     }
 }

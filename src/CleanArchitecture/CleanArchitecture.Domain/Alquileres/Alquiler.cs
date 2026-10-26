@@ -20,9 +20,9 @@ namespace CleanArchitecture.Domain.Alquileres
         public Guid VehiculoId { get; private set; }
         public Guid UserId { get; private set; }
 
-        public RangoFechas Duracion { get; private set; }
+        public RangoFechas Duracion { get; init; }
 
-        public PrecioDetail PrecioAlquiler { get; private set; }
+        public PrecioDetail PrecioAlquiler { get; init; }
 
         public AlquilerStatus Status { get; private set; }
 
@@ -43,7 +43,7 @@ namespace CleanArchitecture.Domain.Alquileres
                 AlquilerStatus.Reservado,
                 fechaCreacion);
 
-            alquiler.AddDomainEvent(new AlquilerReservadoDomainEvents(alquiler.Id));
+            alquiler.AddDomainEvent(new AlquilerReservadoDomainEvent(alquiler.Id));
 
             return alquiler;
         }

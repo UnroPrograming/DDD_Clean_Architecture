@@ -2,6 +2,7 @@
 {
     public enum Accesorio
     {
+        Null,
         Wifi,
         AireAcondicionado,
         AppleCar,
