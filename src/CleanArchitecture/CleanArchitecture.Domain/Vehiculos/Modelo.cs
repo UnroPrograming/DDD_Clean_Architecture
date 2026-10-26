@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Domain.Vehiculos
+﻿namespace CleanArchitecture.Domain.Vehiculos
 {
-    public record Modelo
-    (
-        string Nombre
-    );
+    public record Modelo(string Nombre);
 }
