@@ -25,7 +25,7 @@ namespace CleanArchitecture.Domain.Vehiculos
 
         public Moneda? Mantenimiento { get; private set; }
 
-        public DateTime? FechaUltimoAlquiler { get; private set; }
+        public DateTime? FechaUltimoAlquiler { get; internal set; }
 
         public List<Accesorio> Accesorios { get; private set; } = new();
     }

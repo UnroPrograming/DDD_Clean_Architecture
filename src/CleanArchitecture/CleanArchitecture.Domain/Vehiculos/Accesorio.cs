@@ -2,11 +2,10 @@
 {
     public enum Accesorio
     {
-        Null,
-        Wifi,
-        AireAcondicionado,
-        AppleCar,
-        AndroidCar,
-        Mapas
+        Wifi = 1,
+        AireAcondicionado = 2,
+        AppleCar = 3,
+        AndroidCar = 4,
+        Mapas = 5
     }
 }
