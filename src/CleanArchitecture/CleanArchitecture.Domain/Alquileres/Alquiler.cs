@@ -100,5 +100,19 @@ namespace CleanArchitecture.Domain.Alquileres
             AddDomainEvent(new AlquilerCanceladoDomainEvent(Id));
             return Result.Success();
         }
+
+        public Result Completado(DateTime fechaCompleteado)
+        {
+            if (Status != AlquilerStatus.Confirmado)
+            {
+                return Result.Failure(AlquilerErrors.NotConfirmed);
+            }
+
+            Status = AlquilerStatus.Completado;
+            FechaCompletado = fechaCompleteado;
+
+            AddDomainEvent(new AlquilerCompletadoDomainEvent(Id));
+            return Result.Success();
+        }
     }
 }
