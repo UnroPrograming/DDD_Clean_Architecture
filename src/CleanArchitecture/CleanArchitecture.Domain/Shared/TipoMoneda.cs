@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Domain.Vehiculos
+﻿namespace CleanArchitecture.Domain.Shared
 {
     /// <summary>
     /// Implementación manual del patrón Smart Enum (enumeration class).
