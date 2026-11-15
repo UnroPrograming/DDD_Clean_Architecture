@@ -13,11 +13,11 @@
     /// </summary>
     public record TipoMoneda
     {
+        private TipoMoneda(string codigo) => Codigo = codigo;
+
         public static TipoMoneda None { get; } = new TipoMoneda("");
         public static TipoMoneda Usd { get; } = new TipoMoneda("USD");
         public static TipoMoneda Eur { get; } = new TipoMoneda("EUR");
-
-        private TipoMoneda(string codigo) => Codigo = codigo;
 
         public string? Codigo { get; init; }
 
