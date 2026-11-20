@@ -45,22 +45,24 @@ namespace CleanArchitecture.Domain.Incidencias
             return incidencia;
         }
 
-        public Result CambiarEstado()
-        {
-            Estado.ChangeStatus();
+        public Result IniciarReparacion() => CambiarEstado(Status.EnReparacion, () => new IncidenciaEnReparacionDomainEvent(Id));
+        public Result Resolver() => CambiarEstado(Status.Resuelta, () => new IncidenciaResueltaDomainEvent(Id));
 
-            switch (Estado.ActiveStatus)
+        private Result CambiarEstado(Status destino, Func<IDomainEvent> crearEvento)
+        {
+            var result = Estado.CambiarA(destino);
+
+            if (result.IsFailure)
             {
-                case Status.EnReparacion:
-                    AddDomainEvent(new IncidenciaEnReparacionDomainEvent(Id));
-                    break;
-                case Status.Resuelta:
-                    AddDomainEvent(new IncidenciaResueltaDomainEvent(Id));
-                    break;
+                return Result.Failure(result.Error);
             }
 
+            Estado = result.Value;
+            AddDomainEvent(crearEvento());
             return Result.Success();
         }
+
+        
     }
 }
     

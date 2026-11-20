@@ -1,4 +1,6 @@
-﻿namespace CleanArchitecture.Domain.Incidencias
+﻿using CleanArchitecture.Domain.Abstractions;
+
+namespace CleanArchitecture.Domain.Incidencias
 {
     public sealed record Descripcion
     {
@@ -9,15 +11,15 @@
 
         public string DescripcionValue { get; init; }
 
-        public static Descripcion Create(string descripcion)
+        public static Result<Descripcion> Create(string descripcion)
         {
             if (string.IsNullOrWhiteSpace(descripcion))
             {
-                throw new ArgumentException("La descripción no puede estar vacía.");
+                return Result.Failure<Descripcion>(IncidenciaErrors.DescipcionEmpty);
             }
             if (descripcion.Length > 500)
             {
-                throw new ArgumentException("La descripción no puede tener más de 500 caracteres.");
+                return Result.Failure<Descripcion>(IncidenciaErrors.DescipcionTooLong);
             }
 
             return new Descripcion(descripcion);

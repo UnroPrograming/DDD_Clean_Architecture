@@ -1,4 +1,6 @@
-﻿namespace CleanArchitecture.Domain.Incidencias
+﻿using CleanArchitecture.Domain.Abstractions;
+
+namespace CleanArchitecture.Domain.Incidencias
 {
     public enum Status
     {
@@ -7,23 +9,35 @@
         Resuelta = 3
     }
 
+
     public sealed record IncidenciaStatus
     {
-        public Status ActiveStatus { get; private set; }
+        private IncidenciaStatus(Status activeStatus) => ActiveStatus = activeStatus;
 
-        public static IncidenciaStatus Create()
-        {
-            return new IncidenciaStatus { ActiveStatus = Status.Abierta };
-        }
+        public Status ActiveStatus { get; }
 
-        public void ChangeStatus()
+        public static IncidenciaStatus Create() => new(Status.Abierta);
+
+        public Result<IncidenciaStatus> CambiarA(Status destino)
         {
             if (ActiveStatus == Status.Resuelta)
             {
-                throw new InvalidOperationException("No se puede cambiar el estado de una incidencia resuelta.");
+                return Result.Failure<IncidenciaStatus>(IncidenciaErrors.IncidenciaAlreadyResolved);
             }
 
-            ActiveStatus++;
+            if (!EsTransicionPermitida(ActiveStatus, destino))
+            {
+                return Result.Failure<IncidenciaStatus>(IncidenciaErrors.TransaccionNoPermitida);
+            }
+
+            return new IncidenciaStatus(destino);   // el operador implícito lo convierte en Result
         }
+
+        private static bool EsTransicionPermitida(Status actual, Status destino) => (actual, destino) switch
+        {
+            (Status.Abierta, Status.EnReparacion) => true,
+            (Status.EnReparacion, Status.Resuelta) => true,
+            _ => false
+        };
     }
 }
